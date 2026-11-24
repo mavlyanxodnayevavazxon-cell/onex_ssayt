@@ -1,0 +1,6 @@
+{
+  "name": "ONEX — Elektr Asboblar Do'koni",
+  "description": "ONEX rasmiy elektr asboblar do'koni va katalogi.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

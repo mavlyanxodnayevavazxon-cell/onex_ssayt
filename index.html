@@ -1,0 +1,2314 @@
+<!doctype html>
+<html lang="uz">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>ONEX — Rasmiy Elektr Asboblar Do'koni</title>
+  <meta name="description" content="ONEX rasmiy elektr asboblar do'koni va katalogi." />
+  <meta property="og:title" content="ONEX — Elektr Asboblar Do'koni" />
+  <meta property="og:description" content="ONEX rasmiy elektr asboblar do'koni va katalogi." />
+  <meta property="og:type" content="website" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap"
+    rel="stylesheet"
+  />
+  <script src="https://telegram.org/js/telegram-web-app.js"></script>
+  <style>
+    :root {
+      --bg-primary: #0f0f11;
+      --bg-card: #1a1a1e;
+      --bg-elevated: #232329;
+      --border-subtle: #2a2a30;
+      --border-hover: #3a3a44;
+      --accent: #ff6b00;
+      --accent-hover: #ff8124;
+      --accent-glow: rgba(255, 107, 0, 0.25);
+      --text-primary: #f5f5f7;
+      --text-secondary: #9e9ea8;
+      --text-muted: #6c6c76;
+      --danger: #ff453a;
+      --success: #32d74b;
+      --font-display: 'Outfit', system-ui, sans-serif;
+      --font-sans: 'Plus Jakarta Sans', system-ui, sans-serif;
+      --safe-bottom: env(safe-area-inset-bottom, 0px);
+      --safe-top: env(safe-area-inset-top, 0px);
+    }
+
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    html,
+    body {
+      background-color: var(--bg-primary);
+      color: var(--text-primary);
+      font-family: var(--font-sans);
+      font-size: 15px;
+      line-height: 1.4;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      overflow-x: hidden;
+      min-height: 100dvh;
+    }
+
+    button,
+    input,
+    textarea {
+      font-family: inherit;
+      color: inherit;
+      outline: none;
+    }
+
+    button {
+      cursor: pointer;
+    }
+
+    .tabular-nums {
+      font-variant-numeric: tabular-nums;
+    }
+
+    /* Header */
+    .app-header {
+      position: sticky;
+      top: 0;
+      z-index: 30;
+      background: rgba(15, 15, 17, 0.88);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid rgba(42, 42, 48, 0.7);
+      padding-top: var(--safe-top);
+    }
+
+    .header-inner {
+      max-width: 1152px;
+      margin: 0 auto;
+      padding: 12px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      min-width: 0;
+    }
+
+    .brand-logo {
+      width: 36px;
+      height: 36px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, #ff6b00 0%, #e05200 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 14px var(--accent-glow);
+      flex-shrink: 0;
+    }
+
+    .brand-logo svg {
+      width: 20px;
+      height: 20px;
+      fill: #ffffff;
+    }
+
+    .brand-name {
+      font-family: var(--font-display);
+      font-size: 18px;
+      font-weight: 800;
+      letter-spacing: 0.05em;
+      color: #ffffff;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-shrink: 0;
+    }
+
+    /* Language Switcher */
+    .lang-switch {
+      height: 44px;
+      display: flex;
+      align-items: center;
+      gap: 2px;
+      padding: 4px;
+      border-radius: 12px;
+      border: 1px solid var(--border-subtle);
+      background: var(--bg-card);
+    }
+
+    .lang-icon {
+      display: none;
+      width: 14px;
+      height: 14px;
+      margin: 0 4px 0 6px;
+      stroke: var(--text-secondary);
+      fill: none;
+      stroke-width: 2;
+      flex-shrink: 0;
+    }
+
+    .lang-btn {
+      font-family: var(--font-display);
+      height: 34px;
+      min-width: 38px;
+      padding: 0 10px;
+      border: none;
+      border-radius: 8px;
+      background: transparent;
+      color: var(--text-secondary);
+      font-size: 12px;
+      font-weight: 700;
+      white-space: nowrap;
+      transition: background 0.16s ease, color 0.16s ease;
+    }
+
+    .lang-btn:hover {
+      color: #ffffff;
+    }
+
+    .lang-btn.active {
+      background: var(--accent);
+      color: #ffffff;
+      box-shadow: 0 2px 8px var(--accent-glow);
+    }
+
+    .header-cart-btn {
+      position: relative;
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform 0.15s ease;
+      flex-shrink: 0;
+    }
+
+    .header-cart-btn:active {
+      transform: scale(0.95);
+    }
+
+    .header-cart-btn svg {
+      width: 20px;
+      height: 20px;
+      stroke: var(--text-primary);
+      fill: none;
+      stroke-width: 1.9;
+    }
+
+    .cart-badge {
+      font-family: var(--font-display);
+      position: absolute;
+      top: -6px;
+      right: -6px;
+      min-width: 20px;
+      height: 20px;
+      padding: 0 5px;
+      border-radius: 99px;
+      background: var(--accent);
+      color: #ffffff;
+      font-size: 11px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 2px solid var(--bg-primary);
+      opacity: 0;
+      transform: scale(0.5);
+      pointer-events: none;
+      transition: opacity 0.2s ease, transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    .cart-badge.visible {
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    /* Container */
+    .container {
+      max-width: 1152px;
+      margin: 0 auto;
+    }
+
+    .store-intro {
+      padding: 16px 16px 4px;
+    }
+
+    .store-subtitle {
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--text-secondary);
+    }
+
+    /* Categories */
+    .categories-wrap {
+      padding: 12px 16px;
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+    }
+
+    .categories-wrap::-webkit-scrollbar {
+      display: none;
+    }
+
+    .cat-tab {
+      min-height: 40px;
+      flex-shrink: 0;
+      padding: 8px 16px;
+      border-radius: 12px;
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-secondary);
+      font-size: 13px;
+      font-weight: 600;
+      white-space: nowrap;
+      transition: all 0.16s ease;
+    }
+
+    .cat-tab:hover {
+      border-color: var(--border-hover);
+      color: #ffffff;
+    }
+
+    .cat-tab:active {
+      transform: scale(0.97);
+    }
+
+    .cat-tab.active {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: #ffffff;
+      box-shadow: 0 4px 14px var(--accent-glow);
+    }
+
+    /* Catalog Heading */
+    .catalog-meta {
+      padding: 8px 16px 12px;
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .catalog-title {
+      font-family: var(--font-display);
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--text-primary);
+    }
+
+    .catalog-count {
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--text-secondary);
+      white-space: nowrap;
+    }
+
+    /* Product Grid */
+    .products-grid {
+      padding: 0 16px calc(160px + var(--safe-bottom));
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .product-card {
+      position: relative;
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: 16px;
+      padding: 10px;
+      display: flex;
+      flex-direction: column;
+      transition: border-color 0.2s ease;
+      will-change: transform, opacity, filter;
+    }
+
+    .product-card:hover {
+      border-color: var(--border-hover);
+    }
+
+    .product-img-box {
+      width: 100%;
+      aspect-ratio: 1 / 1;
+      background: #f3f4f6;
+      border-radius: 12px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .product-img-box img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.3s ease;
+    }
+
+    .product-card:hover .product-img-box img {
+      transform: scale(1.03);
+    }
+
+    .product-body {
+      padding-top: 12px;
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+    }
+
+    .product-meta-line {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 11px;
+      font-weight: 500;
+      color: var(--text-secondary);
+      margin-bottom: 4px;
+    }
+
+    .product-meta-cat {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .product-meta-tag {
+      color: var(--accent);
+      font-weight: 600;
+      flex-shrink: 0;
+    }
+
+    .product-title {
+      font-family: var(--font-display);
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--text-primary);
+      line-height: 1.3;
+      margin-bottom: 6px;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .product-specs {
+      font-size: 11.5px;
+      color: var(--text-secondary);
+      line-height: 1.45;
+      margin-bottom: 12px;
+      flex: 1;
+    }
+
+    .product-price {
+      font-family: var(--font-display);
+      font-size: 16px;
+      font-weight: 800;
+      color: #ffffff;
+      margin-bottom: 10px;
+      letter-spacing: -0.01em;
+    }
+
+    .product-price span {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text-secondary);
+      margin-left: 3px;
+    }
+
+    .add-btn {
+      width: 100%;
+      min-height: 44px;
+      border-radius: 12px;
+      border: none;
+      background: var(--accent);
+      color: #ffffff;
+      font-size: 13px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      padding: 8px 16px;
+      white-space: nowrap;
+      transition: background 0.16s ease, transform 0.14s ease;
+    }
+
+    .add-btn:hover {
+      background: var(--accent-hover);
+    }
+
+    .add-btn:active {
+      transform: scale(0.97);
+    }
+
+    .add-btn svg {
+      width: 16px;
+      height: 16px;
+      stroke: currentColor;
+      fill: none;
+      stroke-width: 2.4;
+      flex-shrink: 0;
+    }
+
+    .card-stepper {
+      width: 100%;
+      min-height: 44px;
+      border-radius: 12px;
+      background: var(--bg-elevated);
+      border: 1px solid var(--accent);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 6px;
+    }
+
+    .stepper-btn {
+      width: 36px;
+      height: 36px;
+      border-radius: 8px;
+      border: none;
+      background: rgba(255, 107, 0, 0.15);
+      color: var(--accent);
+      font-size: 18px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.15s ease, color 0.15s ease;
+    }
+
+    .stepper-btn:hover,
+    .stepper-btn:active {
+      background: var(--accent);
+      color: #ffffff;
+    }
+
+    .stepper-qty {
+      font-family: var(--font-display);
+      font-size: 13.5px;
+      font-weight: 700;
+      color: #ffffff;
+    }
+
+    /* Bottom-obscuring scroll veil inside each product card */
+    .scroll-veil {
+      pointer-events: none;
+      position: absolute;
+      inset: 0;
+      border-radius: 16px;
+      opacity: 0;
+      will-change: opacity;
+      background: linear-gradient(
+        to top,
+        rgba(15, 15, 17, 0.96) 22%,
+        rgba(15, 15, 17, 0.72) 62%,
+        rgba(15, 15, 17, 0.18) 100%
+      );
+    }
+
+    /* Subtle Bottom Viewport Mist */
+    .bottom-mist {
+      pointer-events: none;
+      position: fixed;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      z-index: 20;
+      height: 80px;
+      background: linear-gradient(
+        to top,
+        #0f0f11 0%,
+        rgba(15, 15, 17, 0.65) 55%,
+        transparent 100%
+      );
+      opacity: 1;
+      transition: opacity 0.3s ease;
+    }
+
+    .bottom-mist.hidden {
+      opacity: 0;
+    }
+
+    /* Floating Bottom Cart Bar */
+    .floating-cart-wrap {
+      position: fixed;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      z-index: 30;
+      max-width: 576px;
+      margin: 0 auto;
+      padding: 0 16px calc(16px + var(--safe-bottom));
+      transform: translateY(120%);
+      opacity: 0;
+      pointer-events: none;
+      transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.25s ease;
+    }
+
+    .floating-cart-wrap.visible {
+      transform: translateY(0);
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .floating-cart-bar {
+      width: 100%;
+      min-height: 52px;
+      border: none;
+      border-radius: 16px;
+      background: linear-gradient(135deg, #ff6b00 0%, #e85a00 100%);
+      padding: 12px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      color: #ffffff;
+      box-shadow: 0 12px 28px rgba(255, 107, 0, 0.3), 0 4px 12px rgba(0, 0, 0, 0.45);
+      transition: transform 0.15s ease;
+    }
+
+    .floating-cart-bar:active {
+      transform: scale(0.985);
+    }
+
+    .fcb-left {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .fcb-count {
+      font-family: var(--font-display);
+      background: rgba(0, 0, 0, 0.25);
+      padding: 4px 10px;
+      border-radius: 8px;
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .fcb-label {
+      font-size: 14px;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    .fcb-total {
+      font-family: var(--font-display);
+      font-size: 15px;
+      font-weight: 800;
+      white-space: nowrap;
+    }
+
+    /* Bottom Sheet Backdrop & Drawer */
+    .sheet-backdrop {
+      position: fixed;
+      inset: 0;
+      z-index: 40;
+      background: rgba(0, 0, 0, 0.7);
+      backdrop-filter: blur(4px);
+      -webkit-backdrop-filter: blur(4px);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.25s ease;
+    }
+
+    .sheet-backdrop.open {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .bottom-sheet {
+      position: fixed;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      z-index: 50;
+      max-width: 576px;
+      margin: 0 auto;
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: 24px 24px 0 0;
+      max-height: 90dvh;
+      display: flex;
+      flex-direction: column;
+      transform: translateY(110%);
+      pointer-events: none;
+      transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+      box-shadow: 0 -14px 40px rgba(0, 0, 0, 0.65);
+    }
+
+    .bottom-sheet.open {
+      transform: translateY(0);
+      pointer-events: auto;
+    }
+
+    .sheet-handle-wrap {
+      padding: 10px 0 4px;
+      display: flex;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .sheet-handle {
+      width: 40px;
+      height: 4px;
+      border-radius: 99px;
+      background: #3a3a44;
+    }
+
+    .sheet-header {
+      padding: 10px 20px 14px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid var(--border-subtle);
+      flex-shrink: 0;
+    }
+
+    .sheet-title {
+      font-family: var(--font-display);
+      font-size: 18px;
+      font-weight: 800;
+      color: #ffffff;
+    }
+
+    .sheet-close-btn {
+      width: 36px;
+      height: 36px;
+      border-radius: 12px;
+      background: var(--bg-elevated);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-secondary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .sheet-close-btn:hover {
+      color: #ffffff;
+    }
+
+    .sheet-close-btn svg {
+      width: 18px;
+      height: 18px;
+      stroke: currentColor;
+      stroke-width: 2.2;
+      fill: none;
+    }
+
+    .sheet-body {
+      overflow-y: auto;
+      overscroll-behavior: contain;
+      padding: 16px 20px calc(28px + var(--safe-bottom));
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+
+    /* Empty & Confirmed States */
+    .sheet-state-box {
+      padding: 36px 16px;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .state-icon {
+      width: 56px;
+      height: 56px;
+      border-radius: 16px;
+      background: var(--bg-elevated);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-secondary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 4px;
+    }
+
+    .state-icon.success {
+      border-color: rgba(50, 215, 75, 0.25);
+      background: rgba(50, 215, 75, 0.14);
+      color: var(--success);
+    }
+
+    .state-icon svg {
+      width: 26px;
+      height: 26px;
+      stroke: currentColor;
+      fill: none;
+      stroke-width: 2;
+    }
+
+    .state-title {
+      font-family: var(--font-display);
+      font-size: 17px;
+      font-weight: 700;
+      color: #ffffff;
+    }
+
+    .state-desc {
+      font-size: 13px;
+      color: var(--text-secondary);
+      max-width: 280px;
+      line-height: 1.45;
+    }
+
+    /* Cart Items */
+    .cart-items-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .cart-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 10px;
+      border-radius: 16px;
+      background: var(--bg-primary);
+      border: 1px solid var(--border-subtle);
+    }
+
+    .cart-item-img {
+      width: 56px;
+      height: 56px;
+      border-radius: 12px;
+      background: #f3f4f6;
+      overflow: hidden;
+      flex-shrink: 0;
+    }
+
+    .cart-item-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .cart-item-info {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .cart-item-name {
+      font-size: 13.5px;
+      font-weight: 700;
+      color: var(--text-primary);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .cart-item-price {
+      font-size: 12.5px;
+      font-weight: 600;
+      color: var(--accent);
+      margin-top: 2px;
+    }
+
+    .cart-item-controls {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: 12px;
+      padding: 4px;
+    }
+
+    .ci-btn {
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      border: none;
+      background: var(--bg-elevated);
+      color: #ffffff;
+      font-size: 16px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.15s ease;
+    }
+
+    .ci-btn:hover,
+    .ci-btn:active {
+      background: var(--accent);
+    }
+
+    .ci-qty {
+      min-width: 20px;
+      text-align: center;
+      font-size: 13px;
+      font-weight: 700;
+      color: #ffffff;
+    }
+
+    /* Checkout Form */
+    .checkout-section {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      padding-top: 16px;
+      border-top: 1px solid var(--border-subtle);
+    }
+
+    .section-subtitle {
+      font-family: var(--font-display);
+      font-size: 14px;
+      font-weight: 700;
+      color: #ffffff;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .form-label {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text-secondary);
+    }
+
+    .form-input {
+      width: 100%;
+      height: 44px;
+      border-radius: 12px;
+      background: var(--bg-primary);
+      border: 1px solid var(--border-subtle);
+      padding: 0 14px;
+      font-size: 14px;
+      color: #ffffff;
+      transition: border-color 0.2s ease;
+    }
+
+    .form-input::placeholder {
+      color: var(--text-muted);
+    }
+
+    .form-input:focus {
+      border-color: var(--accent);
+    }
+
+    .form-input.error {
+      border-color: var(--danger);
+    }
+
+    .segment-group {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 8px;
+    }
+
+    .segment-group.cols-3 {
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    .segment-btn {
+      min-height: 42px;
+      border-radius: 12px;
+      background: var(--bg-primary);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-secondary);
+      font-size: 12px;
+      font-weight: 600;
+      padding: 0 12px;
+      white-space: nowrap;
+      transition: all 0.15s ease;
+    }
+
+    .segment-btn:hover {
+      color: #ffffff;
+    }
+
+    .segment-btn.active {
+      background: rgba(255, 107, 0, 0.15);
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    .order-summary {
+      background: var(--bg-primary);
+      border: 1px solid var(--border-subtle);
+      border-radius: 16px;
+      padding: 12px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .summary-label {
+      font-size: 12px;
+      color: var(--text-secondary);
+      font-weight: 600;
+    }
+
+    .summary-total {
+      font-family: var(--font-display);
+      font-size: 18px;
+      font-weight: 800;
+      color: #ffffff;
+    }
+
+    .summary-total span {
+      color: var(--accent);
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    .form-error-msg {
+      font-size: 12px;
+      color: var(--danger);
+      font-weight: 600;
+      display: none;
+    }
+
+    .form-error-msg.visible {
+      display: block;
+    }
+
+    .submit-order-btn {
+      font-family: var(--font-display);
+      width: 100%;
+      min-height: 48px;
+      border-radius: 12px;
+      border: none;
+      background: linear-gradient(135deg, #ff6b00 0%, #e85a00 100%);
+      color: #ffffff;
+      font-size: 14px;
+      font-weight: 800;
+      box-shadow: 0 8px 22px var(--accent-glow);
+      transition: transform 0.14s ease, opacity 0.2s ease;
+    }
+
+    .submit-order-btn:active {
+      transform: scale(0.985);
+    }
+
+    .submit-order-btn:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+
+    .back-catalog-btn {
+      margin-top: 12px;
+      min-height: 44px;
+      padding: 10px 24px;
+      border-radius: 12px;
+      border: none;
+      background: var(--accent);
+      color: #ffffff;
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    /* Toast */
+    .toast {
+      position: fixed;
+      top: calc(16px + var(--safe-top));
+      left: 50%;
+      transform: translateX(-50%) translateY(-160%);
+      z-index: 60;
+      background: var(--bg-elevated);
+      border: 1px solid var(--border-subtle);
+      color: #ffffff;
+      padding: 10px 16px;
+      border-radius: 12px;
+      font-size: 12px;
+      font-weight: 600;
+      white-space: nowrap;
+      box-shadow: 0 10px 28px rgba(0, 0, 0, 0.55);
+      transition: transform 0.28s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .toast.show {
+      transform: translateX(-50%) translateY(0);
+    }
+
+    /* Responsive Desktop & Tablet */
+    @media (min-width: 640px) {
+      .header-inner {
+        padding: 12px 24px;
+      }
+
+      .lang-icon {
+        display: block;
+      }
+
+      .store-intro {
+        padding: 24px 24px 4px;
+      }
+
+      .categories-wrap {
+        padding: 12px 24px;
+      }
+
+      .catalog-meta {
+        padding: 8px 24px 12px;
+      }
+
+      .catalog-title {
+        font-size: 20px;
+      }
+
+      .products-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 16px;
+        padding: 0 24px 176px;
+      }
+
+      .product-card {
+        padding: 14px;
+      }
+
+      .product-title {
+        font-size: 15px;
+      }
+
+      .product-specs {
+        font-size: 12px;
+      }
+
+      .product-price {
+        font-size: 17px;
+      }
+
+      .bottom-sheet {
+        bottom: 24px;
+        border-radius: 24px;
+      }
+
+      .sheet-handle-wrap {
+        display: none;
+      }
+    }
+
+    @media (min-width: 1024px) {
+      .products-grid {
+        gap: 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <header class="app-header">
+    <div class="header-inner">
+      <div class="brand">
+        <div class="brand-logo" aria-hidden="true">
+          <svg viewBox="0 0 24 24">
+            <path d="M13 2L4 14h6l-1 8 9-12h-6l1-8z" />
+          </svg>
+        </div>
+        <span class="brand-name">ONEX</span>
+      </div>
+
+      <div class="header-actions">
+        <div class="lang-switch" role="group" aria-label="Tilni tanlash / Выбор языка">
+          <svg class="lang-icon" viewBox="0 0 24 24" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M5 8l6 6M4 14l6-6 2-3M2 5h12M7 2h1m14 20l-5-10-5 10m1.5-3h7" />
+          </svg>
+          <button type="button" class="lang-btn" id="langBtnUz" data-lang="uz">O'Z</button>
+          <button type="button" class="lang-btn" id="langBtnRu" data-lang="ru">RU</button>
+        </div>
+
+        <button class="header-cart-btn" id="headerCartBtn" type="button" aria-label="Savatni ochish">
+          <svg viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M6 6h15l-1.5 9h-12z" />
+            <path stroke-linecap="round" stroke-linejoin="round" d="M6 6L5 3H2" />
+            <circle cx="9.5" cy="19.5" r="1.2" fill="currentColor" stroke="none" />
+            <circle cx="17.5" cy="19.5" r="1.2" fill="currentColor" stroke="none" />
+          </svg>
+          <span class="cart-badge tabular-nums" id="headerCartBadge">0</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <div class="container">
+    <div class="store-intro">
+      <p class="store-subtitle" id="storeSubtitle"></p>
+    </div>
+
+    <nav class="categories-wrap" id="categoriesNav" aria-label="Kategoriyalar"></nav>
+
+    <div class="catalog-meta">
+      <h1 class="catalog-title" id="catalogTitle"></h1>
+      <span class="catalog-count tabular-nums" id="catalogCount"></span>
+    </div>
+
+    <main class="products-grid" id="productsGrid"></main>
+  </div>
+
+  <!-- Atmospheric Bottom Mist -->
+  <div class="bottom-mist" id="bottomMist" aria-hidden="true"></div>
+
+  <!-- Floating Bottom Cart CTA -->
+  <div class="floating-cart-wrap" id="floatingCartWrap">
+    <button class="floating-cart-bar" id="floatingCartBtn" type="button">
+      <div class="fcb-left">
+        <span class="fcb-count tabular-nums" id="floatingCount"></span>
+        <span class="fcb-label" id="floatingLabel"></span>
+      </div>
+      <span class="fcb-total tabular-nums" id="floatingTotal"></span>
+    </button>
+  </div>
+
+  <!-- Bottom Sheet Backdrop & Drawer -->
+  <div class="sheet-backdrop" id="sheetBackdrop"></div>
+
+  <section class="bottom-sheet" id="cartSheet" aria-modal="true" role="dialog" aria-label="Savat">
+    <div class="sheet-handle-wrap">
+      <div class="sheet-handle"></div>
+    </div>
+
+    <div class="sheet-header">
+      <h2 class="sheet-title" id="sheetTitle"></h2>
+      <button class="sheet-close-btn" id="closeSheetBtn" type="button" aria-label="Yopish">
+        <svg viewBox="0 0 24 24">
+          <path stroke-linecap="round" d="M6 6l12 12M18 6L6 18" />
+        </svg>
+      </button>
+    </div>
+
+    <div class="sheet-body" id="sheetBody"></div>
+  </section>
+
+  <!-- Toast -->
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script>
+    (function () {
+      const LANG_STORAGE_KEY = 'onex_store_lang';
+
+      const tg = window.Telegram && window.Telegram.WebApp ? window.Telegram.WebApp : null;
+      if (tg) {
+        try {
+          tg.ready();
+          tg.expand();
+          if (tg.setHeaderColor) tg.setHeaderColor('#0F0F11');
+          if (tg.setBackgroundColor) tg.setBackgroundColor('#0F0F11');
+        } catch (_) {}
+      }
+
+      function haptic(type) {
+        try {
+          if (!tg || !tg.HapticFeedback) return;
+          if (type === 'success') {
+            tg.HapticFeedback.notificationOccurred('success');
+          } else {
+            tg.HapticFeedback.impactOccurred(type || 'light');
+          }
+        } catch (_) {}
+      }
+
+      function ruProductWord(count) {
+        const mod10 = count % 10;
+        const mod100 = count % 100;
+        if (mod10 === 1 && mod100 !== 11) return 'товар';
+        if (mod10 >= 2 && mod10 <= 4 && (mod100 < 12 || mod100 > 14)) return 'товара';
+        return 'товаров';
+      }
+
+      const TRANSLATIONS = {
+        uz: {
+          docTitle: "ONEX — Rasmiy Elektr Asboblar Do'koni",
+          brandSubtitle: "Rasmiy elektr asboblar do'koni · 12 oy kafolat",
+          openCartAria: 'Savatni ochish',
+          allProductsTitle: 'Barcha mahsulotlar',
+          countLabel: function (n) { return n + ' ta mahsulot'; },
+          addToCart: 'Savatga',
+          decreaseQty: 'Kamaytirish',
+          increaseQty: "Ko'paytirish",
+          unitShort: 'ta',
+          currency: "so'm",
+          viewCart: "Savatni ko'rish",
+          cartTitle: 'Savat',
+          closeCartAria: 'Yopish',
+          emptyCartTitle: "Savatingiz bo'sh",
+          emptyCartDesc: "Katalogdan kerakli ONEX elektr asboblarini tanlab savatga qo'shing.",
+          checkoutTitle: 'Buyurtmani rasmiylashtirish',
+          nameLabel: 'Ismingiz *',
+          namePlaceholder: 'Masalan: Jasur',
+          phoneLabel: 'Telefon raqamingiz *',
+          deliveryMethodLabel: 'Yetkazib berish usuli',
+          deliveryCourier: 'Yetkazib berish',
+          deliveryPickup: 'Olib ketish',
+          pickupAddressValue: "Do'kondan olib ketish",
+          addressLabel: 'Yetkazib berish manzili *',
+          addressPlaceholder: "Shahar, tuman, ko'cha va uy raqami",
+          paymentMethodLabel: "To'lov turi",
+          paymentCash: 'Naqd',
+          totalLabel: "Jami to'lov:",
+          submitOrder: 'Buyurtmani tasdiqlash',
+          submittingOrder: 'Yuborilmoqda...',
+          errName: 'Iltimos, ismingizni kiriting.',
+          errPhone: "Iltimos, to'g'ri telefon raqamini kiriting.",
+          errAddress: 'Iltimos, yetkazib berish manzilini kiriting.',
+          errServer: "Buyurtmani yuborishda xatolik yuz berdi. Qayta urinib ko'ring.",
+          toastAccepted: 'Buyurtmangiz qabul qilindi!',
+          confirmedTitle: function (id) { return 'Buyurtma #' + id + ' tasdiqlandi'; },
+          confirmedSubtitle: "Operatorimiz tez orada siz bilan bog'lanadi.",
+          confirmedTotalLabel: 'Jami:',
+          backToCatalog: 'Katalogga qaytish',
+          categories: {
+            Barchasi: 'Barchasi',
+            Shurupovyortlar: 'Shurupovyortlar',
+            Bolgarkalar: 'Bolgarkalar',
+            Perforatorlar: 'Perforatorlar',
+            'Kesish asboblari': 'Kesish asboblari',
+            Payvandlash: 'Payvandlash'
+          }
+        },
+        ru: {
+          docTitle: 'ONEX — Официальный магазин электроинструментов',
+          brandSubtitle: 'Официальный магазин электроинструментов · Гарантия 12 мес.',
+          openCartAria: 'Открыть корзину',
+          allProductsTitle: 'Все товары',
+          countLabel: function (n) { return n + ' ' + ruProductWord(n); },
+          addToCart: 'В корзину',
+          decreaseQty: 'Уменьшить',
+          increaseQty: 'Увеличить',
+          unitShort: 'шт.',
+          currency: 'сум',
+          viewCart: 'Открыть корзину',
+          cartTitle: 'Корзина',
+          closeCartAria: 'Закрыть',
+          emptyCartTitle: 'Ваша корзина пуста',
+          emptyCartDesc: 'Выберите нужные электроинструменты ONEX из каталога и добавьте в корзину.',
+          checkoutTitle: 'Оформление заказа',
+          nameLabel: 'Ваше имя *',
+          namePlaceholder: 'Например: Жасур',
+          phoneLabel: 'Ваш номер телефона *',
+          deliveryMethodLabel: 'Способ доставки',
+          deliveryCourier: 'Доставка',
+          deliveryPickup: 'Самовывоз',
+          pickupAddressValue: 'Самовывоз из магазина',
+          addressLabel: 'Адрес доставки *',
+          addressPlaceholder: 'Город, район, улица и номер дома',
+          paymentMethodLabel: 'Способ оплаты',
+          paymentCash: 'Наличные',
+          totalLabel: 'Итого к оплате:',
+          submitOrder: 'Подтвердить заказ',
+          submittingOrder: 'Отправка...',
+          errName: 'Пожалуйста, введите ваше имя.',
+          errPhone: 'Пожалуйста, введите корректный номер телефона.',
+          errAddress: 'Пожалуйста, введите адрес доставки.',
+          errServer: 'Произошла ошибка при отправке заказа. Попробуйте снова.',
+          toastAccepted: 'Ваш заказ принят!',
+          confirmedTitle: function (id) { return 'Заказ #' + id + ' подтверждён'; },
+          confirmedSubtitle: 'Наш оператор свяжется с вами в ближайшее время.',
+          confirmedTotalLabel: 'Итого:',
+          backToCatalog: 'Вернуться в каталог',
+          categories: {
+            Barchasi: 'Все',
+            Shurupovyortlar: 'Шуруповёрты',
+            Bolgarkalar: 'Болгарки',
+            Perforatorlar: 'Перфораторы',
+            'Kesish asboblari': 'Лобзики',
+            Payvandlash: 'Сварка'
+          }
+        }
+      };
+
+      const CATEGORIES = [
+        'Barchasi',
+        'Shurupovyortlar',
+        'Bolgarkalar',
+        'Perforatorlar',
+        'Kesish asboblari',
+        'Payvandlash'
+      ];
+
+      const PRODUCTS = [
+        {
+          id: 1,
+          name: 'ONEX Shurupovyort 21V',
+          nameRu: 'ONEX Шуруповёрт 21V',
+          price: 939000,
+          category: 'Shurupovyortlar',
+          image: '/src/assets/images/onex_cordless_drill_1795517085821.jpg',
+          specs: "21V Li-Ion · 2x AKB · Cho'tkasiz motor",
+          specsRu: '21V Li-Ion · 2x АКБ · Бесщёточный мотор',
+          tag: 'Hit',
+          tagRu: 'Хит'
+        },
+        {
+          id: 2,
+          name: 'ONEX Bolgarka (USHM) 125mm',
+          nameRu: 'ONEX Болгарка (УШМ) 125 мм',
+          price: 380000,
+          category: 'Bolgarkalar',
+          image: '/src/assets/images/onex_angle_grinder_1795517086540.jpg',
+          specs: '125 mm disk · 950 Vt · 11 000 ayl/min',
+          specsRu: 'Диск 125 мм · 950 Вт · 11 000 об/мин',
+          tag: 'Pro',
+          tagRu: 'Про'
+        },
+        {
+          id: 3,
+          name: 'ONEX Perforator 26mm',
+          nameRu: 'ONEX Перфоратор 26 мм',
+          price: 680000,
+          category: 'Perforatorlar',
+          image: '/src/assets/images/onex_rotary_hammer_1795517085761.jpg',
+          specs: 'SDS-Plus · 26 mm · 3 rejim · 850 Vt',
+          specsRu: 'SDS-Plus · 26 мм · 3 режима · 850 Вт',
+          tag: 'Ommabop',
+          tagRu: 'Популярное'
+        },
+        {
+          id: 4,
+          name: 'ONEX Gaykavyort 21V Pro',
+          nameRu: 'ONEX Гайковёрт 21V Pro',
+          price: 1150000,
+          category: 'Shurupovyortlar',
+          image: '/src/assets/images/onex_impact_wrench_1795517087254.jpg',
+          specs: '21V Li-Ion · 450 Nm · 2x 5.0Ah',
+          specsRu: '21V Li-Ion · 450 Нм · 2x 5.0Ah',
+          tag: 'Yangi',
+          tagRu: 'Новинка'
+        },
+        {
+          id: 5,
+          name: 'ONEX Lobzik 750W',
+          nameRu: 'ONEX Лобзик 750W',
+          price: 420000,
+          category: 'Kesish asboblari',
+          image: '/src/assets/images/onex_jigsaw_saw_1795517087446.jpg',
+          specs: "750 Vt · 6 tezlik · Lazer yo'naltirgich",
+          specsRu: '750 Вт · 6 скоростей · Лазерный указатель',
+          tag: 'Pro',
+          tagRu: 'Про'
+        },
+        {
+          id: 6,
+          name: 'ONEX Svarka Apparati IGBT-250',
+          nameRu: 'ONEX Сварочный аппарат IGBT-250',
+          price: 890000,
+          category: 'Payvandlash',
+          image: '/src/assets/images/onex_welding_inverter_1795517087642.jpg',
+          specs: '250 A · Raqamli displey · Anti-Stick',
+          specsRu: '250 А · Цифровой дисплей · Anti-Stick',
+          tag: 'Hit',
+          tagRu: 'Хит'
+        },
+        {
+          id: 7,
+          name: 'ONEX Shurupovyort 16V Compact',
+          nameRu: 'ONEX Шуруповёрт 16V Compact',
+          price: 640000,
+          category: 'Shurupovyortlar',
+          image: '/src/assets/images/onex_cordless_drill_1795517085821.jpg',
+          specs: '16V Li-Ion · 2x AKB · LED yoritgich',
+          specsRu: '16V Li-Ion · 2x АКБ · LED-подсветка'
+        },
+        {
+          id: 8,
+          name: 'ONEX Bolgarka 125mm Tezlik Sozlagichli',
+          nameRu: 'ONEX Болгарка 125 мм с регулировкой оборотов',
+          price: 465000,
+          category: 'Bolgarkalar',
+          image: '/src/assets/images/onex_angle_grinder_1795517086540.jpg',
+          specs: '125 mm · 1100 Vt · 6 bosqichli tezlik',
+          specsRu: '125 мм · 1100 Вт · 6 ступеней скорости'
+        },
+        {
+          id: 9,
+          name: 'ONEX Perforator 28mm Heavy',
+          nameRu: 'ONEX Перфоратор 28 мм Heavy',
+          price: 845000,
+          category: 'Perforatorlar',
+          image: '/src/assets/images/onex_rotary_hammer_1795517085761.jpg',
+          specs: 'SDS-Plus · 28 mm · 1050 Vt · Quti bilan',
+          specsRu: 'SDS-Plus · 28 мм · 1050 Вт · С кейсом'
+        },
+        {
+          id: 10,
+          name: 'ONEX Zarbali Gaykavyort 550Nm',
+          nameRu: 'ONEX Ударный гайковёрт 550 Нм',
+          price: 1320000,
+          category: 'Shurupovyortlar',
+          image: '/src/assets/images/onex_impact_wrench_1795517087254.jpg',
+          specs: '21V Brushless · 1/2" kvadrat · 550 Nm',
+          specsRu: '21V Brushless · Квадрат 1/2" · 550 Нм'
+        },
+        {
+          id: 11,
+          name: 'ONEX Elektr Lobzik Pro 850W',
+          nameRu: 'ONEX Электролобзик Pro 850W',
+          price: 495000,
+          category: 'Kesish asboblari',
+          image: '/src/assets/images/onex_jigsaw_saw_1795517087446.jpg',
+          specs: '850 Vt · Alyuminiy taglik · SDS mahkamlash',
+          specsRu: '850 Вт · Литая подошва · Быстрый зажим SDS'
+        },
+        {
+          id: 12,
+          name: 'ONEX Inverter Svarka Mini-200',
+          nameRu: 'ONEX Инверторная сварка Mini-200',
+          price: 735000,
+          category: 'Payvandlash',
+          image: '/src/assets/images/onex_welding_inverter_1795517087642.jpg',
+          specs: '200 A · 3.2 mm elektrod · Yengil korpus',
+          specsRu: '200 А · Электрод 3.2 мм · Компактный корпус'
+        }
+      ];
+
+      function getToolPlaceholderSvg(category) {
+        let shape = '';
+        if (category === 'Shurupovyortlar') {
+          shape =
+            '<rect x="34" y="42" width="76" height="32" rx="8" fill="#1A1A1E"/>' +
+            '<rect x="44" y="47" width="46" height="22" rx="4" fill="#FF6B00"/>' +
+            '<rect x="110" y="49" width="22" height="18" rx="3" fill="#3A3A44"/>' +
+            '<rect x="132" y="54" width="16" height="8" rx="2" fill="#888894"/>' +
+            '<path d="M62 74 L78 74 L74 114 L56 114 Z" fill="#1A1A1E"/>' +
+            '<rect x="44" y="114" width="46" height="18" rx="5" fill="#FF6B00"/>';
+        } else if (category === 'Bolgarkalar' || category === 'Kesish asboblari') {
+          shape =
+            '<circle cx="52" cy="78" r="30" fill="none" stroke="#888894" stroke-width="5"/>' +
+            '<circle cx="52" cy="78" r="10" fill="#1A1A1E"/>' +
+            '<path d="M36 50 A30 30 0 0 1 78 58 L60 72 Z" fill="#1A1A1E"/>' +
+            '<rect x="52" y="64" width="78" height="26" rx="10" fill="#FF6B00"/>' +
+            '<rect x="118" y="68" width="32" height="18" rx="6" fill="#1A1A1E"/>' +
+            '<rect x="64" y="38" width="10" height="26" rx="4" fill="#2A2A30"/>';
+        } else {
+          shape =
+            '<rect x="56" y="44" width="66" height="34" rx="8" fill="#FF6B00"/>' +
+            '<rect x="26" y="53" width="30" height="16" rx="3" fill="#1A1A1E"/>' +
+            '<rect x="14" y="58" width="14" height="6" rx="2" fill="#888894"/>' +
+            '<path d="M100 78 L118 78 L116 122 L98 122 Z" fill="#1A1A1E"/>' +
+            '<path d="M62 78 L74 78 L74 112 L62 112 Z" fill="#2A2A30"/>' +
+            '<rect x="54" y="112" width="70" height="12" rx="5" fill="#1A1A1E"/>';
+        }
+        const svg = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 160">' + shape + '</svg>';
+        return 'data:image/svg+xml;charset=UTF-8,' + encodeURIComponent(svg);
+      }
+
+      window.__onexFallbackImg = function (imgEl, category) {
+        imgEl.onerror = null;
+        imgEl.src = getToolPlaceholderSvg(category);
+      };
+
+      function getSavedLang() {
+        try {
+          return window.localStorage.getItem(LANG_STORAGE_KEY) === 'ru' ? 'ru' : 'uz';
+        } catch (_) {
+          return 'uz';
+        }
+      }
+
+      function saveLang(lang) {
+        try {
+          window.localStorage.setItem(LANG_STORAGE_KEY, lang);
+        } catch (_) {}
+      }
+
+      function escapeHtml(str) {
+        return String(str || '')
+          .replace(/&/g, '&amp;')
+          .replace(/"/g, '&quot;')
+          .replace(/</g, '&lt;')
+          .replace(/>/g, '&gt;');
+      }
+
+      function formatPrice(num) {
+        return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
+      }
+
+      function getLocalizedProduct(product, lang) {
+        return {
+          name: lang === 'ru' ? product.nameRu : product.name,
+          specs: lang === 'ru' ? product.specsRu : product.specs,
+          tag: lang === 'ru' ? product.tagRu : product.tag
+        };
+      }
+
+      // App State
+      let lang = getSavedLang();
+      let activeCategory = 'Barchasi';
+      let cart = [];
+      let confirmedOrder = null;
+      let formErrorMsg = '';
+      let fieldError = null;
+      let isSubmitting = false;
+
+      const tgUser = tg && tg.initDataUnsafe && tg.initDataUnsafe.user ? tg.initDataUnsafe.user : null;
+      const checkoutState = {
+        name: tgUser ? [tgUser.first_name, tgUser.last_name].filter(Boolean).join(' ') : '',
+        phone: '',
+        delivery: 'Yetkazib berish',
+        address: '',
+        payment: 'Naqd'
+      };
+
+      // DOM Refs
+      const langBtnUz = document.getElementById('langBtnUz');
+      const langBtnRu = document.getElementById('langBtnRu');
+      const headerCartBtn = document.getElementById('headerCartBtn');
+      const headerCartBadge = document.getElementById('headerCartBadge');
+      const storeSubtitle = document.getElementById('storeSubtitle');
+      const categoriesNav = document.getElementById('categoriesNav');
+      const catalogTitle = document.getElementById('catalogTitle');
+      const catalogCount = document.getElementById('catalogCount');
+      const productsGrid = document.getElementById('productsGrid');
+      const bottomMist = document.getElementById('bottomMist');
+      const floatingCartWrap = document.getElementById('floatingCartWrap');
+      const floatingCartBtn = document.getElementById('floatingCartBtn');
+      const floatingCount = document.getElementById('floatingCount');
+      const floatingLabel = document.getElementById('floatingLabel');
+      const floatingTotal = document.getElementById('floatingTotal');
+      const sheetBackdrop = document.getElementById('sheetBackdrop');
+      const cartSheet = document.getElementById('cartSheet');
+      const sheetTitle = document.getElementById('sheetTitle');
+      const closeSheetBtn = document.getElementById('closeSheetBtn');
+      const sheetBody = document.getElementById('sheetBody');
+      const toastEl = document.getElementById('toast');
+
+      let toastTimer = null;
+      function showToast(msg) {
+        toastEl.textContent = msg;
+        toastEl.classList.add('show');
+        clearTimeout(toastTimer);
+        toastTimer = setTimeout(function () {
+          toastEl.classList.remove('show');
+        }, 2200);
+      }
+
+      function getCartStats() {
+        let totalQty = 0;
+        let totalAmount = 0;
+        for (let i = 0; i < cart.length; i++) {
+          totalQty += cart[i].qty;
+          totalAmount += cart[i].price * cart[i].qty;
+        }
+        return { totalQty: totalQty, totalAmount: totalAmount };
+      }
+
+      function getItemQty(productId) {
+        for (let i = 0; i < cart.length; i++) {
+          if (cart[i].id === productId) return cart[i].qty;
+        }
+        return 0;
+      }
+
+      function addToCart(productId) {
+        const product = PRODUCTS.find(function (p) { return p.id === productId; });
+        if (!product) return;
+
+        confirmedOrder = null;
+        const existing = cart.find(function (item) { return item.id === productId; });
+        if (existing) {
+          existing.qty += 1;
+        } else {
+          cart.push(Object.assign({}, product, { qty: 1 }));
+        }
+        haptic('light');
+        updateUI();
+      }
+
+      function changeQty(productId, delta) {
+        const idx = cart.findIndex(function (item) { return item.id === productId; });
+        if (idx === -1) return;
+
+        cart[idx].qty += delta;
+        if (cart[idx].qty <= 0) {
+          cart.splice(idx, 1);
+        }
+        haptic('light');
+        updateUI();
+      }
+
+      function syncLanguageMeta() {
+        const t = TRANSLATIONS[lang];
+        document.documentElement.lang = lang;
+        document.title = t.docTitle;
+        langBtnUz.classList.toggle('active', lang === 'uz');
+        langBtnRu.classList.toggle('active', lang === 'ru');
+        langBtnUz.setAttribute('aria-pressed', String(lang === 'uz'));
+        langBtnRu.setAttribute('aria-pressed', String(lang === 'ru'));
+        headerCartBtn.setAttribute('aria-label', t.openCartAria);
+        storeSubtitle.textContent = t.brandSubtitle;
+        sheetTitle.textContent = t.cartTitle;
+        cartSheet.setAttribute('aria-label', t.cartTitle);
+        closeSheetBtn.setAttribute('aria-label', t.closeCartAria);
+      }
+
+      function renderCategories() {
+        const t = TRANSLATIONS[lang];
+        categoriesNav.innerHTML = CATEGORIES.map(function (cat) {
+          const isActive = activeCategory === cat;
+          return (
+            '<button type="button" class="cat-tab' +
+            (isActive ? ' active' : '') +
+            '" data-category="' +
+            escapeHtml(cat) +
+            '">' +
+            escapeHtml(t.categories[cat]) +
+            '</button>'
+          );
+        }).join('');
+      }
+
+      function renderProducts() {
+        const t = TRANSLATIONS[lang];
+        const filtered =
+          activeCategory === 'Barchasi'
+            ? PRODUCTS
+            : PRODUCTS.filter(function (p) { return p.category === activeCategory; });
+
+        catalogTitle.textContent =
+          activeCategory === 'Barchasi' ? t.allProductsTitle : t.categories[activeCategory];
+        catalogCount.textContent = t.countLabel(filtered.length);
+
+        productsGrid.innerHTML = filtered
+          .map(function (product) {
+            const loc = getLocalizedProduct(product, lang);
+            const catLabel = t.categories[product.category];
+            const qty = getItemQty(product.id);
+
+            const tagHtml = loc.tag
+              ? '<span aria-hidden="true">·</span><span class="product-meta-tag">' +
+                escapeHtml(loc.tag) +
+                '</span>'
+              : '';
+
+            const actionHtml =
+              qty === 0
+                ? '<button type="button" class="add-btn" data-add-id="' +
+                  product.id +
+                  '">' +
+                  '<svg viewBox="0 0 24 24"><path stroke-linecap="round" d="M12 5v14M5 12h14"/></svg>' +
+                  '<span>' +
+                  escapeHtml(t.addToCart) +
+                  '</span>' +
+                  '</button>'
+                : '<div class="card-stepper">' +
+                  '<button type="button" class="stepper-btn" data-qty-id="' +
+                  product.id +
+                  '" data-delta="-1" aria-label="' +
+                  escapeHtml(t.decreaseQty) +
+                  '">−</button>' +
+                  '<span class="stepper-qty tabular-nums">' +
+                  qty +
+                  ' ' +
+                  escapeHtml(t.unitShort) +
+                  '</span>' +
+                  '<button type="button" class="stepper-btn" data-qty-id="' +
+                  product.id +
+                  '" data-delta="1" aria-label="' +
+                  escapeHtml(t.increaseQty) +
+                  '">+</button>' +
+                  '</div>';
+
+            return (
+              '<article class="product-card" data-product-id="' +
+              product.id +
+              '">' +
+              '<div class="product-img-box">' +
+              '<img src="' +
+              escapeHtml(product.image) +
+              '" alt="' +
+              escapeHtml(loc.name) +
+              '" loading="lazy" referrerpolicy="no-referrer" onerror="__onexFallbackImg(this, \'' +
+              escapeHtml(product.category) +
+              '\')" />' +
+              '</div>' +
+              '<div class="product-body">' +
+              '<div class="product-meta-line">' +
+              '<span class="product-meta-cat">' +
+              escapeHtml(catLabel) +
+              '</span>' +
+              tagHtml +
+              '</div>' +
+              '<h3 class="product-title">' +
+              escapeHtml(loc.name) +
+              '</h3>' +
+              '<p class="product-specs">' +
+              escapeHtml(loc.specs) +
+              '</p>' +
+              '<div class="product-price tabular-nums">' +
+              formatPrice(product.price) +
+              '<span>' +
+              escapeHtml(t.currency) +
+              '</span></div>' +
+              actionHtml +
+              '</div>' +
+              '<div class="scroll-veil" data-scroll-veil="true" aria-hidden="true"></div>' +
+              '</article>'
+            );
+          })
+          .join('');
+
+        scheduleRowScrollClarity();
+      }
+
+      function updateCartIndicators() {
+        const t = TRANSLATIONS[lang];
+        const stats = getCartStats();
+
+        headerCartBadge.textContent = stats.totalQty;
+        headerCartBadge.classList.toggle('visible', stats.totalQty > 0);
+
+        floatingCount.textContent = stats.totalQty + ' ' + t.unitShort;
+        floatingLabel.textContent = t.viewCart;
+        floatingTotal.textContent = formatPrice(stats.totalAmount) + ' ' + t.currency;
+        floatingCartWrap.classList.toggle('visible', stats.totalQty > 0);
+      }
+
+      function renderBottomSheet() {
+        const t = TRANSLATIONS[lang];
+
+        if (confirmedOrder) {
+          sheetBody.innerHTML =
+            '<div class="sheet-state-box">' +
+            '<div class="state-icon success">' +
+            '<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path stroke-linecap="round" stroke-linejoin="round" d="M8.5 12.5l2.5 2.5 4.5-5"/></svg>' +
+            '</div>' +
+            '<h3 class="state-title">' +
+            escapeHtml(t.confirmedTitle(confirmedOrder.orderId)) +
+            '</h3>' +
+            '<p class="state-desc">' +
+            escapeHtml(t.confirmedSubtitle) +
+            ' ' +
+            escapeHtml(t.confirmedTotalLabel) +
+            ' <strong class="tabular-nums" style="color:#fff">' +
+            formatPrice(confirmedOrder.total) +
+            ' ' +
+            escapeHtml(t.currency) +
+            '</strong></p>' +
+            '<button type="button" class="back-catalog-btn" id="backToCatalogBtn">' +
+            escapeHtml(t.backToCatalog) +
+            '</button>' +
+            '</div>';
+
+          document.getElementById('backToCatalogBtn').addEventListener('click', function () {
+            confirmedOrder = null;
+            closeBottomSheet();
+          });
+          return;
+        }
+
+        if (cart.length === 0) {
+          sheetBody.innerHTML =
+            '<div class="sheet-state-box">' +
+            '<div class="state-icon">' +
+            '<svg viewBox="0 0 24 24">' +
+            '<path stroke-linecap="round" stroke-linejoin="round" d="M6 6h15l-1.5 9h-12z"/>' +
+            '<path stroke-linecap="round" stroke-linejoin="round" d="M6 6L5 3H2"/>' +
+            '</svg>' +
+            '</div>' +
+            '<div class="state-title">' +
+            escapeHtml(t.emptyCartTitle) +
+            '</div>' +
+            '<p class="state-desc">' +
+            escapeHtml(t.emptyCartDesc) +
+            '</p>' +
+            '</div>';
+          return;
+        }
+
+        const stats = getCartStats();
+        const isDelivery = checkoutState.delivery === 'Yetkazib berish';
+
+        const itemsHtml = cart
+          .map(function (item) {
+            const locName = getLocalizedProduct(item, lang).name;
+            return (
+              '<div class="cart-item">' +
+              '<div class="cart-item-img">' +
+              '<img src="' +
+              escapeHtml(item.image) +
+              '" alt="' +
+              escapeHtml(locName) +
+              '" referrerpolicy="no-referrer" onerror="__onexFallbackImg(this, \'' +
+              escapeHtml(item.category) +
+              '\')" />' +
+              '</div>' +
+              '<div class="cart-item-info">' +
+              '<div class="cart-item-name">' +
+              escapeHtml(locName) +
+              '</div>' +
+              '<div class="cart-item-price tabular-nums">' +
+              formatPrice(item.price * item.qty) +
+              ' ' +
+              escapeHtml(t.currency) +
+              '</div>' +
+              '</div>' +
+              '<div class="cart-item-controls">' +
+              '<button type="button" class="ci-btn" data-qty-id="' +
+              item.id +
+              '" data-delta="-1" aria-label="' +
+              escapeHtml(t.decreaseQty) +
+              '">−</button>' +
+              '<span class="ci-qty tabular-nums">' +
+              item.qty +
+              '</span>' +
+              '<button type="button" class="ci-btn" data-qty-id="' +
+              item.id +
+              '" data-delta="1" aria-label="' +
+              escapeHtml(t.increaseQty) +
+              '">+</button>' +
+              '</div>' +
+              '</div>'
+            );
+          })
+          .join('');
+
+        sheetBody.innerHTML =
+          '<div class="cart-items-list">' +
+          itemsHtml +
+          '</div>' +
+          '<form class="checkout-section" id="checkoutForm" novalidate>' +
+          '<h3 class="section-subtitle">' +
+          escapeHtml(t.checkoutTitle) +
+          '</h3>' +
+          '<div class="form-group">' +
+          '<label class="form-label" for="inputName">' +
+          escapeHtml(t.nameLabel) +
+          '</label>' +
+          '<input id="inputName" class="form-input' +
+          (fieldError === 'name' ? ' error' : '') +
+          '" type="text" placeholder="' +
+          escapeHtml(t.namePlaceholder) +
+          '" value="' +
+          escapeHtml(checkoutState.name) +
+          '" />' +
+          '</div>' +
+          '<div class="form-group">' +
+          '<label class="form-label" for="inputPhone">' +
+          escapeHtml(t.phoneLabel) +
+          '</label>' +
+          '<input id="inputPhone" class="form-input' +
+          (fieldError === 'phone' ? ' error' : '') +
+          '" type="tel" placeholder="+998 90 123 45 67" value="' +
+          escapeHtml(checkoutState.phone) +
+          '" />' +
+          '</div>' +
+          '<div class="form-group">' +
+          '<span class="form-label">' +
+          escapeHtml(t.deliveryMethodLabel) +
+          '</span>' +
+          '<div class="segment-group">' +
+          '<button type="button" class="segment-btn' +
+          (isDelivery ? ' active' : '') +
+          '" data-delivery="Yetkazib berish">' +
+          escapeHtml(t.deliveryCourier) +
+          '</button>' +
+          '<button type="button" class="segment-btn' +
+          (!isDelivery ? ' active' : '') +
+          '" data-delivery="Olib ketish">' +
+          escapeHtml(t.deliveryPickup) +
+          '</button>' +
+          '</div>' +
+          '</div>' +
+          (isDelivery
+            ? '<div class="form-group">' +
+              '<label class="form-label" for="inputAddress">' +
+              escapeHtml(t.addressLabel) +
+              '</label>' +
+              '<input id="inputAddress" class="form-input' +
+              (fieldError === 'address' ? ' error' : '') +
+              '" type="text" placeholder="' +
+              escapeHtml(t.addressPlaceholder) +
+              '" value="' +
+              escapeHtml(checkoutState.address) +
+              '" />' +
+              '</div>'
+            : '') +
+          '<div class="form-group">' +
+          '<span class="form-label">' +
+          escapeHtml(t.paymentMethodLabel) +
+          '</span>' +
+          '<div class="segment-group cols-3">' +
+          '<button type="button" class="segment-btn' +
+          (checkoutState.payment === 'Naqd' ? ' active' : '') +
+          '" data-payment="Naqd">' +
+          escapeHtml(t.paymentCash) +
+          '</button>' +
+          '<button type="button" class="segment-btn' +
+          (checkoutState.payment === 'Click' ? ' active' : '') +
+          '" data-payment="Click">Click</button>' +
+          '<button type="button" class="segment-btn' +
+          (checkoutState.payment === 'Payme' ? ' active' : '') +
+          '" data-payment="Payme">Payme</button>' +
+          '</div>' +
+          '</div>' +
+          '<div class="order-summary">' +
+          '<span class="summary-label">' +
+          escapeHtml(t.totalLabel) +
+          '</span>' +
+          '<span class="summary-total tabular-nums">' +
+          formatPrice(stats.totalAmount) +
+          ' <span>' +
+          escapeHtml(t.currency) +
+          '</span></span>' +
+          '</div>' +
+          '<div class="form-error-msg' +
+          (formErrorMsg ? ' visible' : '') +
+          '" id="formErrorMsg">' +
+          escapeHtml(formErrorMsg) +
+          '</div>' +
+          '<button type="submit" class="submit-order-btn" id="submitOrderBtn"' +
+          (isSubmitting ? ' disabled' : '') +
+          '>' +
+          escapeHtml(isSubmitting ? t.submittingOrder : t.submitOrder) +
+          '</button>' +
+          '</form>';
+
+        bindCheckoutEvents();
+      }
+
+      function bindCheckoutEvents() {
+        const inputName = document.getElementById('inputName');
+        const inputPhone = document.getElementById('inputPhone');
+        const inputAddress = document.getElementById('inputAddress');
+        const form = document.getElementById('checkoutForm');
+
+        if (inputName) {
+          inputName.addEventListener('input', function (e) {
+            checkoutState.name = e.target.value;
+            if (fieldError === 'name') fieldError = null;
+            e.target.classList.remove('error');
+          });
+        }
+
+        if (inputPhone) {
+          inputPhone.addEventListener('input', function (e) {
+            checkoutState.phone = e.target.value;
+            if (fieldError === 'phone') fieldError = null;
+            e.target.classList.remove('error');
+          });
+        }
+
+        if (inputAddress) {
+          inputAddress.addEventListener('input', function (e) {
+            checkoutState.address = e.target.value;
+            if (fieldError === 'address') fieldError = null;
+            e.target.classList.remove('error');
+          });
+        }
+
+        if (form) {
+          form.addEventListener('submit', handleOrderSubmit);
+        }
+      }
+
+      async function handleOrderSubmit(e) {
+        e.preventDefault();
+        const t = TRANSLATIONS[lang];
+
+        const name = checkoutState.name.trim();
+        const phone = checkoutState.phone.trim();
+        const isDelivery = checkoutState.delivery === 'Yetkazib berish';
+        const address = isDelivery ? checkoutState.address.trim() : t.pickupAddressValue;
+
+        formErrorMsg = '';
+        fieldError = null;
+
+        if (!name) {
+          fieldError = 'name';
+          formErrorMsg = t.errName;
+          renderBottomSheet();
+          document.getElementById('inputName')?.focus();
+          return;
+        }
+
+        if (!phone || phone.replace(/\D/g, '').length < 7) {
+          fieldError = 'phone';
+          formErrorMsg = t.errPhone;
+          renderBottomSheet();
+          document.getElementById('inputPhone')?.focus();
+          return;
+        }
+
+        if (isDelivery && !address) {
+          fieldError = 'address';
+          formErrorMsg = t.errAddress;
+          renderBottomSheet();
+          document.getElementById('inputAddress')?.focus();
+          return;
+        }
+
+        const stats = getCartStats();
+        isSubmitting = true;
+        renderBottomSheet();
+
+        try {
+          const response = await fetch('/api/order', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              name: name,
+              phone: phone,
+              delivery: checkoutState.delivery,
+              address: address,
+              payment: checkoutState.payment,
+              lang: lang,
+              items: cart.map(function (item) {
+                return {
+                  id: item.id,
+                  name: getLocalizedProduct(item, lang).name,
+                  price: item.price,
+                  qty: item.qty,
+                  subtotal: item.price * item.qty
+                };
+              }),
+              total: stats.totalAmount,
+              user_id: tgUser ? tgUser.id : null,
+              tg_user: tgUser
+            })
+          });
+
+          const data = await response.json().catch(function () { return {}; });
+          if (!response.ok) {
+            throw new Error(data.error || 'Server error');
+          }
+
+          haptic('success');
+          showToast(t.toastAccepted);
+          confirmedOrder = {
+            orderId: data.orderId || 'ONX-1001',
+            total: stats.totalAmount
+          };
+          cart = [];
+          isSubmitting = false;
+          updateUI();
+
+          if (tg && tg.initData) {
+            setTimeout(function () {
+              tg.close();
+            }, 700);
+          }
+        } catch (_) {
+          isSubmitting = false;
+          formErrorMsg = t.errServer;
+          renderBottomSheet();
+        }
+      }
+
+      // Row-synchronized Scroll Reveal & Clarity Engine
+      function applyRowScrollClarity() {
+        const cards = Array.prototype.slice.call(
+          productsGrid.querySelectorAll('.product-card')
+        );
+        if (cards.length === 0) return;
+
+        const reducedMotion =
+          window.matchMedia &&
+          window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+        if (reducedMotion) {
+          cards.forEach(function (el) {
+            el.style.opacity = '1';
+            el.style.transform = 'none';
+            el.style.filter = 'none';
+            const veil = el.querySelector('[data-scroll-veil]');
+            if (veil) veil.style.opacity = '0';
+          });
+          bottomMist.classList.add('hidden');
+          return;
+        }
+
+        const vh = window.innerHeight || 800;
+        const docHeight = document.documentElement.scrollHeight;
+        const remainingScroll = Math.max(0, docHeight - (window.scrollY + vh));
+        bottomMist.classList.toggle('hidden', remainingScroll <= 24);
+
+        // Group cards into visual rows by offsetTop (±10px tolerance)
+        const rows = [];
+        cards.forEach(function (el) {
+          const top = el.offsetTop;
+          const lastRow = rows[rows.length - 1];
+          if (lastRow && Math.abs(lastRow[0].offsetTop - top) <= 10) {
+            lastRow.push(el);
+          } else {
+            rows.push([el]);
+          }
+        });
+
+        const startRevealY = vh * 0.95;
+        const fullClearY = vh * 0.62;
+        const span = Math.max(120, startRevealY - fullClearY);
+        const endOfPageBoost = remainingScroll < 140 ? 1 - remainingScroll / 140 : 0;
+
+        rows.forEach(function (rowCards, rowIndex) {
+          const rect = rowCards[0].getBoundingClientRect();
+          let rawProgress;
+
+          if (rowIndex === 0 && rect.top < vh * 0.85) {
+            rawProgress = 1;
+          } else {
+            rawProgress = Math.min(1, Math.max(0, (startRevealY - rect.top) / span));
+          }
+
+          if (endOfPageBoost > 0 && rect.top < vh * 0.96) {
+            rawProgress = Math.min(1, rawProgress + endOfPageBoost * (1 - rawProgress));
+          }
+
+          const eased = 1 - Math.pow(1 - rawProgress, 2.2);
+          const opacity = (0.14 + 0.86 * eased).toFixed(3);
+          const translateY = ((1 - eased) * 32).toFixed(2);
+          const scale = (0.92 + 0.08 * eased).toFixed(4);
+          const blurPx = ((1 - eased) * 8.5).toFixed(2);
+          const saturate = (0.65 + 0.35 * eased).toFixed(3);
+          const veilOpacity = ((1 - eased) * 0.92).toFixed(3);
+
+          rowCards.forEach(function (cardEl) {
+            cardEl.style.opacity = opacity;
+            cardEl.style.transform = 'translate3d(0, ' + translateY + 'px, 0) scale(' + scale + ')';
+            cardEl.style.filter =
+              eased >= 0.995 ? 'none' : 'blur(' + blurPx + 'px) saturate(' + saturate + ')';
+
+            const veil = cardEl.querySelector('[data-scroll-veil]');
+            if (veil) veil.style.opacity = veilOpacity;
+          });
+        });
+      }
+
+      let scrollRafId = null;
+      function scheduleRowScrollClarity() {
+        if (scrollRafId !== null) return;
+        scrollRafId = window.requestAnimationFrame(function () {
+          scrollRafId = null;
+          applyRowScrollClarity();
+        });
+      }
+
+      function openBottomSheet() {
+        renderBottomSheet();
+        sheetBackdrop.classList.add('open');
+        cartSheet.classList.add('open');
+        document.body.style.overflow = 'hidden';
+        haptic('light');
+      }
+
+      function closeBottomSheet() {
+        sheetBackdrop.classList.remove('open');
+        cartSheet.classList.remove('open');
+        document.body.style.overflow = '';
+      }
+
+      function updateUI() {
+        syncLanguageMeta();
+        renderCategories();
+        renderProducts();
+        updateCartIndicators();
+        if (cartSheet.classList.contains('open')) {
+          renderBottomSheet();
+        }
+      }
+
+      // Event Listeners
+      langBtnUz.addEventListener('click', function () {
+        if (lang === 'uz') return;
+        lang = 'uz';
+        saveLang('uz');
+        formErrorMsg = '';
+        haptic('light');
+        updateUI();
+      });
+
+      langBtnRu.addEventListener('click', function () {
+        if (lang === 'ru') return;
+        lang = 'ru';
+        saveLang('ru');
+        formErrorMsg = '';
+        haptic('light');
+        updateUI();
+      });
+
+      categoriesNav.addEventListener('click', function (e) {
+        const btn = e.target.closest('.cat-tab');
+        if (!btn) return;
+        activeCategory = btn.getAttribute('data-category');
+        haptic('light');
+        renderCategories();
+        renderProducts();
+      });
+
+      productsGrid.addEventListener('click', function (e) {
+        const addBtn = e.target.closest('[data-add-id]');
+        if (addBtn) {
+          addToCart(Number(addBtn.getAttribute('data-add-id')));
+          return;
+        }
+        const qtyBtn = e.target.closest('[data-qty-id]');
+        if (qtyBtn) {
+          changeQty(
+            Number(qtyBtn.getAttribute('data-qty-id')),
+            Number(qtyBtn.getAttribute('data-delta'))
+          );
+        }
+      });
+
+      sheetBody.addEventListener('click', function (e) {
+        const qtyBtn = e.target.closest('[data-qty-id]');
+        if (qtyBtn) {
+          changeQty(
+            Number(qtyBtn.getAttribute('data-qty-id')),
+            Number(qtyBtn.getAttribute('data-delta'))
+          );
+          return;
+        }
+        const deliveryBtn = e.target.closest('[data-delivery]');
+        if (deliveryBtn) {
+          checkoutState.delivery = deliveryBtn.getAttribute('data-delivery');
+          haptic('light');
+          renderBottomSheet();
+          return;
+        }
+        const paymentBtn = e.target.closest('[data-payment]');
+        if (paymentBtn) {
+          checkoutState.payment = paymentBtn.getAttribute('data-payment');
+          haptic('light');
+          renderBottomSheet();
+        }
+      });
+
+      headerCartBtn.addEventListener('click', openBottomSheet);
+      floatingCartBtn.addEventListener('click', openBottomSheet);
+      closeSheetBtn.addEventListener('click', closeBottomSheet);
+      sheetBackdrop.addEventListener('click', closeBottomSheet);
+
+      window.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape' && cartSheet.classList.contains('open')) {
+          closeBottomSheet();
+        }
+      });
+
+      window.addEventListener('scroll', scheduleRowScrollClarity, { passive: true });
+      window.addEventListener('resize', scheduleRowScrollClarity, { passive: true });
+
+      // Initial render
+      updateUI();
+    })();
+  </script>
+</body>
+</html>
